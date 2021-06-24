@@ -34,12 +34,20 @@ public class Message implements Serializable {
     public Message() {}
 
     // constructor - param
-    public Message(Long groupId, Long senderId, Long recipientId, String text, Boolean seen) {
+    public Message(
+            Long groupId,
+            Long senderId,
+            Long recipientId,
+            String text,
+            Boolean seen,
+            LocalDateTime sentAt
+    ) {
         this.groupId = groupId;
+        this.text = text;
         this.senderId = senderId;
         this.recipientId = recipientId;
-        this.text = text;
         this.seen = seen;
+        this.sentAt = sentAt;
     }
 
     // getters & setters
