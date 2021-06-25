@@ -119,7 +119,7 @@ These schemas will automatically created once the app is running
 
 - Send Message
 
-  Send a new message to another user on with new conversation
+  Send a message to another user with a new conversation
 
   POST request
 
