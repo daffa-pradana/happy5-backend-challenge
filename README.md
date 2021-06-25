@@ -163,7 +163,7 @@ These schemas will automatically created once the app is running
 
 - List Conversations
 
-  List a every conversation existed that involves current user
+  List conversations that involves current user
 
   GET Request
 
