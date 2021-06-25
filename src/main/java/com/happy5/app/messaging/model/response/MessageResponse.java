@@ -2,17 +2,17 @@ package com.happy5.app.messaging.model.response;
 
 import com.happy5.app.messaging.model.Message;
 
-public class SendMessageResponse {
+public class MessageResponse {
 
     // props
     private String responseMessage;
     private Message createdMessage;
 
     // constructor - default
-    public SendMessageResponse() {}
+    public MessageResponse() {}
 
     // constructor - param
-    public SendMessageResponse(String responseMessage, Message createdMessage) {
+    public MessageResponse(String responseMessage, Message createdMessage) {
         this.responseMessage = responseMessage;
         this.createdMessage = createdMessage;
     }

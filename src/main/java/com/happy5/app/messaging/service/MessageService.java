@@ -1,13 +1,16 @@
 package com.happy5.app.messaging.service;
 
+import com.happy5.app.messaging.exception.GroupNotFoundException;
 import com.happy5.app.messaging.model.Message;
 import com.happy5.app.messaging.model.MessageGroup;
 import com.happy5.app.messaging.repository.MessageGroupRepository;
 import com.happy5.app.messaging.repository.MessageRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +48,32 @@ public class MessageService {
         return messageGroupRepository.save(newGroup);
     }
 
-    // add message
+    // Get message group
+    public MessageGroup findMessageGroupService(Long groupId) {
+        return messageGroupRepository.findMessageGroupByGroupId(groupId).
+                orElseThrow(() -> new GroupNotFoundException("Message group with id " + groupId + " doesn't exist"));
+    }
+
+    // Extract recipient
+    public Long extractRecipientService(String members, Long senderId) {
+
+        // regex
+        String memberStr = members.replaceAll("[ ]", "");
+
+        // string builder
+        StringBuilder memberSB = new StringBuilder(memberStr);
+        memberSB.deleteCharAt(0);
+        memberSB.deleteCharAt(memberSB.length()-1);
+        String processed = memberSB.toString();
+
+        // remove sender
+        List<String> memberList = new ArrayList<>(Arrays.asList(processed.split(",")));
+        memberList.remove(senderId.toString());
+
+        return Long.parseLong(memberList.get(0));
+    }
+
+    // Add message
     public Message addMessageService(Long senderId, Long recipientId, Long groupId, String text) {
         // timestamp
         LocalDateTime currentTime = LocalDateTime.now();
