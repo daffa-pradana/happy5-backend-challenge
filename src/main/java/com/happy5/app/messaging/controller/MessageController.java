@@ -91,5 +91,15 @@ public class MessageController {
         return new ResponseEntity<>(messageGroups,HttpStatus.OK);
     }
 
-    // List message WIP
+    // List message
+    @GetMapping("/conversations/{group-id}")
+    public ResponseEntity<?> listMessages(
+            @PathVariable("group-id") Long groupId,
+            @RequestHeader("user-id") Long id
+    ) {
+        // list message
+        List<Message> messageList = messageService.listMessageService(groupId, id);
+
+        return new ResponseEntity<>(messageList, HttpStatus.OK);
+    }
 }

@@ -1,11 +1,11 @@
 package com.happy5.app.messaging.service;
 
 import com.happy5.app.messaging.exception.GroupNotFoundException;
+import com.happy5.app.messaging.exception.UserNotAuthorizedException;
 import com.happy5.app.messaging.model.Message;
 import com.happy5.app.messaging.model.MessageGroup;
 import com.happy5.app.messaging.repository.MessageGroupRepository;
 import com.happy5.app.messaging.repository.MessageRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +89,19 @@ public class MessageService {
 
         // save new message
         return messageRepository.save(newMessage);
+    }
+
+    // List message
+    public List<Message> listMessageService(Long groupId, Long userId) {
+        // find group
+        MessageGroup messageGroup = findMessageGroupService(groupId);
+
+        // authorize user
+        String msg = "Your'e not authorized to access this conversation";
+        if (!messageGroup.getMembers().contains(userId.toString())) throw new UserNotAuthorizedException(msg);
+
+        // find messages
+        return messageRepository.findMessageByGroupId(groupId);
     }
 
 }
