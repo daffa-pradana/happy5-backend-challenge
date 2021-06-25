@@ -103,6 +103,9 @@ public class MessageController {
         // list message
         List<Message> messageList = messageService.listMessageService(groupId, id);
 
+        // read message
+        messageService.readMessageService(messageList, id);
+
         return new ResponseEntity<>(messageList, HttpStatus.OK);
     }
 }

@@ -132,7 +132,15 @@ public class MessageService {
         return messageRepository.findMessageByGroupId(groupId);
     }
 
-    // Read message WIP
-
+    // Read message
+    public void readMessageService(List<Message> messageList, Long userId) {
+        for (Message message: messageList) {
+            if (!message.getSeen() && message.getRecipientId().equals(userId)) {
+                // update seen status
+                message.setSeen(true);
+                messageRepository.save(message);
+            }
+        }
+    }
 
 }
