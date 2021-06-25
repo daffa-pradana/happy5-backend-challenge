@@ -42,7 +42,7 @@ API Services for Messaging Feature submitted for Happy5 Junior Backend Engineer 
 
 ## Database Entity Schema
 
-This schemas will automatically created once the app is running
+These schemas will automatically created once the app is running
 
 #### **user**
 
