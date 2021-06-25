@@ -80,5 +80,15 @@ public class MessageController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    // List conversation WIP..
+    // List conversation
+    @GetMapping("/conversations")
+    public ResponseEntity<?> listConversations(
+            @RequestHeader("user-id") Long id
+    ) {
+        // list message group
+        List<MessageGroup> messageGroups = messageService.listMessageGroupService(id);
+
+        return new ResponseEntity<>(messageGroups,HttpStatus.OK);
+    }
+
 }

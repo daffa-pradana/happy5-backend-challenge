@@ -54,6 +54,12 @@ public class MessageService {
                 orElseThrow(() -> new GroupNotFoundException("Message group with id " + groupId + " doesn't exist"));
     }
 
+    // List message group
+    public List<MessageGroup> listMessageGroupService(Long id) {
+        String userId = id.toString();
+        return messageGroupRepository.findMessageGroupByMembersContains(userId);
+    }
+
     // Extract recipient
     public Long extractRecipientService(String members, Long senderId) {
 
