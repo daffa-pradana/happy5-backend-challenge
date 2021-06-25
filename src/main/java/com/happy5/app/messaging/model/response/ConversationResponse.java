@@ -3,8 +3,6 @@ package com.happy5.app.messaging.model.response;
 import com.happy5.app.messaging.model.Message;
 import com.happy5.app.messaging.model.MessageGroup;
 
-import java.util.List;
-
 public class ConversationResponse {
 
     // props
