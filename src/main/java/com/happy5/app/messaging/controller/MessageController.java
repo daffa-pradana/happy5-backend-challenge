@@ -3,6 +3,7 @@ package com.happy5.app.messaging.controller;
 import com.happy5.app.messaging.model.Message;
 import com.happy5.app.messaging.model.MessageGroup;
 import com.happy5.app.messaging.model.User;
+import com.happy5.app.messaging.model.response.ConversationResponse;
 import com.happy5.app.messaging.model.response.MessageResponse;
 import com.happy5.app.messaging.service.MessageService;
 import com.happy5.app.messaging.service.UserService;
@@ -71,8 +72,6 @@ public class MessageController {
         // create message
         Message createdMessage = messageService.addMessageService(senderId, recipientId, groupId, text);
 
-        // set seen to true later on..
-
         // generate response
         String successMessage = "The message have been replied to " + recipient.getFirstName() + " successfully";
         MessageResponse response = new MessageResponse(successMessage, createdMessage);
@@ -81,18 +80,22 @@ public class MessageController {
     }
 
     // List conversation
-    @GetMapping("/conversations")
+    @GetMapping("/conversation")
     public ResponseEntity<?> listConversations(
             @RequestHeader("user-id") Long id
     ) {
         // list message group
         List<MessageGroup> messageGroups = messageService.listMessageGroupService(id);
 
-        return new ResponseEntity<>(messageGroups,HttpStatus.OK);
+        // get conversations
+        List<ConversationResponse> conversations = messageService.getConversationService(messageGroups, id);
+
+        // return list of conversation response
+        return new ResponseEntity<>(conversations,HttpStatus.OK);
     }
 
     // List message
-    @GetMapping("/conversations/{group-id}")
+    @GetMapping("/conversation/{group-id}")
     public ResponseEntity<?> listMessages(
             @PathVariable("group-id") Long groupId,
             @RequestHeader("user-id") Long id

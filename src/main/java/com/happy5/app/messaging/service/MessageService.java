@@ -4,6 +4,7 @@ import com.happy5.app.messaging.exception.GroupNotFoundException;
 import com.happy5.app.messaging.exception.UserNotAuthorizedException;
 import com.happy5.app.messaging.model.Message;
 import com.happy5.app.messaging.model.MessageGroup;
+import com.happy5.app.messaging.model.response.ConversationResponse;
 import com.happy5.app.messaging.repository.MessageGroupRepository;
 import com.happy5.app.messaging.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,33 @@ public class MessageService {
         memberList.remove(senderId.toString());
 
         return Long.parseLong(memberList.get(0));
+    }
+
+    // Get conversations
+    public List<ConversationResponse> getConversationService(List<MessageGroup> messageGroups, Long userId) {
+        List<ConversationResponse> conversationResponses = new ArrayList<>();
+
+        for (MessageGroup group: messageGroups) {
+            // list message
+            List<Message> messageList = listMessageService(group.getGroupId(), userId);
+
+            // count unread message
+            int unreadMessage = 0;
+            for (Message message: messageList) {
+                if (!message.getSeen() && message.getRecipientId().equals(userId)) unreadMessage++;
+            }
+
+            // get last message
+            Message lastMessage = messageList.get(messageList.size()-1);
+
+            // generate response
+            ConversationResponse res = new ConversationResponse(group, lastMessage, unreadMessage);
+
+            // add to list
+            conversationResponses.add(res);
+        }
+
+        return conversationResponses;
     }
 
     // Add message
