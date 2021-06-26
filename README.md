@@ -4,9 +4,17 @@ API Services for Messaging Feature submitted for Happy5 Junior Backend Engineer 
 
 ## Technologies
 
+**Stack:**
+
 - Java 11
 - SpringBoot 2.5.1
 - MySQL server 5.7.34
+
+**Spring Dependencies:**
+
+- Spring Web
+- Spring Data JPA
+- MySQL Driver
 
 ## Setup
 
