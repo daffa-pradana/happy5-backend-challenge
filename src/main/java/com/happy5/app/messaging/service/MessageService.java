@@ -32,7 +32,7 @@ public class MessageService {
     // Add message group
     public MessageGroup addMessageGroupService(Long senderId, Long recipientId) {
         // sender & recipient validation
-        if (senderId.equals(recipientId)) throw new IllegalArgumentException("Sender and Recipient cannot be the same!");
+        if (senderId.equals(recipientId)) throw new IllegalArgumentException("Sender id and Recipient id cannot be the same!");
 
         // generate member
         List<Long> newMembers = Arrays.asList(senderId, recipientId);
@@ -40,7 +40,7 @@ public class MessageService {
 
         // check if existed
         boolean existed = messageGroupRepository.findMessageGroupByMembers(newMembers.toString()).isPresent();
-        if (existed) throw new IllegalArgumentException("Message Group already existed, try using 'Reply' endpoint");
+        if (existed) throw new IllegalArgumentException("Message Group already existed, try using 'Reply' feature instead");
 
         // set members
         MessageGroup newGroup = new MessageGroup(newMembers.toString());
@@ -63,7 +63,6 @@ public class MessageService {
 
     // Extract recipient
     public Long extractRecipientService(String members, Long senderId) {
-
         // regex
         String memberStr = members.replaceAll("[ ]", "");
 
@@ -125,7 +124,7 @@ public class MessageService {
         MessageGroup messageGroup = findMessageGroupService(groupId);
 
         // authorize user
-        String msg = "Your'e not authorized to access this conversation";
+        String msg = "This user is not authorized to access this conversation";
         if (!messageGroup.getMembers().contains(userId.toString())) throw new UserNotAuthorizedException(msg);
 
         // find messages

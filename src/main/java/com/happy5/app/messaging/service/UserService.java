@@ -26,7 +26,7 @@ public class UserService {
     // find user
     public User findUserService(Long id) {
         return userRepository.findUserById(id).
-                orElseThrow(() -> new UserNotFoundException("User with id" + id + " is not registered"));
+                orElseThrow(() -> new UserNotFoundException("User with id " + id + " is not registered"));
     }
 
     // find all users
@@ -36,6 +36,7 @@ public class UserService {
 
     // delete user
     public void deleteUser(Long id) {
+        findUserService(id);
         userRepository.deleteById(id);
     }
 
