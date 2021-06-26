@@ -45,7 +45,7 @@ public class MessageController {
         Message createdMessage = messageService.addMessageService(senderId, recipientId, currentGroup.getGroupId(), text);
 
         // generate response
-        String successMessage = "Message has been sent to " + recipient.getFirstName() + "";
+        String successMessage = "Message has been sent to " + recipient.getFirstName();
         MessageResponse response = new MessageResponse(successMessage, createdMessage);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -79,7 +79,7 @@ public class MessageController {
 
     // List conversation
     @GetMapping("/conversation")
-    public ResponseEntity<?> listConversations(
+    public ResponseEntity<List<ConversationResponse>> listConversations(
             @RequestHeader("user-id") Long id
     ) {
         // list message group
@@ -94,7 +94,7 @@ public class MessageController {
 
     // List message
     @GetMapping("/conversation/{group-id}")
-    public ResponseEntity<?> listMessages(
+    public ResponseEntity<List<Message>> listMessages(
             @PathVariable("group-id") Long groupId,
             @RequestHeader("user-id") Long id
     ) {
