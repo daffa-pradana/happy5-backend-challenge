@@ -1,6 +1,6 @@
 # Happy5 Backend Challenge
 
-API Services for Messaging Feature submitted for Happy5 Junior Backend Engineer Assesment Test.
+API Services for Messaging Feature, submitted by author to complete Happy5 Junior Backend Engineer Assesment Test.
 
 ## Technologies
 
